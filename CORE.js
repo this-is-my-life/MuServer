@@ -122,7 +122,8 @@ mu.get('/action/UserTyped/:id', (req, res) => {
 					UsersCoin: UsersCoin[id].UsersCoin + 1024
 				};
 			}
-			cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
+            cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
+            return res.status(200).json({status: "OK"});
 		}
     }
 });
