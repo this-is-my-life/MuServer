@@ -11,6 +11,7 @@ const server = require("express");
 const bodyParser = require('body-parser');
 const UsersCoin = require("./Saved/UsersCoin.json");
 const ServersPrefix = require("./Saved/ServersPrefix.json");
+const chalk = require('chalk');
 const cmds = require("fs");
 const mu = server();
 
@@ -34,7 +35,7 @@ mu.get("/", (req, res) => {
         "cannotGive": ["AV.avi"],
         "howToGet": "/api/<FileName>"
     });
-    console.log("Get | /")
+    console.log(chalk.red("Get | /"))
 });
 
 // Users Coin 
@@ -56,7 +57,7 @@ mu.get('/api/UsersCoin.json/:id', (req, res) => {
             UsersCoin: UsersCoin[id].UsersCoin + 1
         }
     );
-    console.log("Get | /api/UserCoin.json | " + id)
+    console.log(chalk.green("Get | /api/UserCoin.json | " + id))
     });
   
 mu.get('/action/UserTyped/:id/:verify', (req, res) => {
@@ -131,7 +132,7 @@ mu.get('/action/UserTyped/:id/:verify', (req, res) => {
 			}
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
             res.status(200).json({status: "OK"});
-            console.log("Get | /action/UserTyped | " + id + " | 인증됨");
+            console.log(chalk.gray("Get | /action/UserTyped | " + id + " | 인증됨"));
 		}
     }
 });
@@ -255,7 +256,7 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
         }
             res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
-            console.log("Get | /action/Dobak | " + id + " | 인증됨");
+            console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨"));
 		}
     }
 );
