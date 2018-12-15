@@ -44,15 +44,17 @@ mu.get('/api/UsersCoin.json/:id', (req, res) => {
     if (!id) {
       return res.status(400).json({error: 'Incorrect id'});
     }
-    let userCoinData = UsersCoin[id].UsersCoin;
-    if (!userCoinData) {
-        return res.status(404).json({error: 'Not Found That User'})
-    }
-    return res.json({
-        "UserID": id,
-        "mute": userCoinData
+	if (!UsersCoin[id]) {
+		UsersCoin[id] = {
+			UsersCoin: 0
+        };
+        cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
+	}
+    return res.json(
+        UsersCoin[id] = {
+            UsersCoin: UsersCoin[id].UsersCoin + 1
+        });
     });
-  });
   
 mu.get('/action/UserTyped/:id/:verify', (req, res) => {
     const id = parseInt(req.params.id, 10);
@@ -137,6 +139,14 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
     if (!id) {
       return res.status(400).json({error: 'Incorrect id'});
     } else {
+        
+			if (!UsersCoin[id]) {
+				UsersCoin[id] = {
+					UsersCoin: 0
+				};
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
+            }
+
         let Slot1; // 첫번째 슬롯 값의 대한 메세지 스트링
         let Slot2; // 두번째 슬롯 값의 대한 메세지 스트링
         let Slot3; // 세번째 슬롯 값의 대한 메세지 스트링
