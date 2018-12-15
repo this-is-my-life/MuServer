@@ -1,0 +1,27 @@
+{
+  "name": "muserver",
+  "version": "0.0.1",
+  "description": "µBot's Server DataBase",
+  "main": "CORE.js",
+  "scripts": {
+    "test": "node CORE.js",
+    "start": "node CORE.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PMHStudio/MuServer.git"
+  },
+  "keywords": [
+    "node",
+    "server"
+  ],
+  "author": "PMH Studio / PMH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PMHStudio/MuServer/issues"
+  },
+  "homepage": "https://github.com/PMHStudio/MuServer#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
