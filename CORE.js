@@ -52,6 +52,6 @@ mu.get('/api/UsersCoin.json/:id', (req, res) => {
 // Servers Prefix
 mu.get("/api/ServersPrefilx.json", (req, res) => res.json(ServersPrefix));
 
-mu.listen(DBport, () => {
+mu.listen(process.env.PORT, '0.0.0.0', function() {
     console.log(`MuBot Server listening on port ${DBport}!`);
 });
