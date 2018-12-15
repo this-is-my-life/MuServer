@@ -54,8 +54,10 @@ mu.get('/api/UsersCoin.json/:id', (req, res) => {
     });
   });
   
-mu.get('/action/UserTyped/:id', (req, res) => {
+mu.get('/action/UserTyped/:id/:verify', (req, res) => {
     const id = parseInt(req.params.id, 10);
+    if (!req.params.verify) return res.status(401).json({error: 'unauthorized'});
+    if (req.params.verify != process.env.verify) return res.status(403).json({error: 'forbidden'});
     if (!id) {
       return res.status(400).json({error: 'Incorrect id'});
     } else {
