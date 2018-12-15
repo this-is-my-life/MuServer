@@ -12,7 +12,7 @@ const UsersCoin = require("./Saved/UsersCoin.json");
 const ServersPrefix = require("./Saved/ServersPrefix.json");
 const mu = server();
 
-let DBport = 8080;
+let DBport = 80;
 
 mu.get("/", (req, res) => {
     res.send({
