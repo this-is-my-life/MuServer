@@ -34,6 +34,7 @@ mu.get("/", (req, res) => {
         "cannotGive": ["AV.avi"],
         "howToGet": "/api/<FileName>"
     });
+    console.log("Get | /")
 });
 
 // Users Coin 
@@ -50,10 +51,12 @@ mu.get('/api/UsersCoin.json/:id', (req, res) => {
         };
         cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
 	}
-    return res.json(
+    res.json(
         UsersCoin[id] = {
             UsersCoin: UsersCoin[id].UsersCoin + 1
-        });
+        }
+    );
+    console.log("Get | /api/UserCoin.json | " + id)
     });
   
 mu.get('/action/UserTyped/:id/:verify', (req, res) => {
@@ -127,7 +130,8 @@ mu.get('/action/UserTyped/:id/:verify', (req, res) => {
 				};
 			}
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
-            return res.status(200).json({status: "OK"});
+            res.status(200).json({status: "OK"});
+            console.log("Get | /action/UserTyped | " + id + " | 인증됨");
 		}
     }
 });
@@ -250,7 +254,8 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             };
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
         }
-            return res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
+            res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
+            console.log("Get | /action/Dobak | " + id + " | 인증됨");
 		}
     }
 );
