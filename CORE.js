@@ -74,7 +74,7 @@ mu.get('/action/UserTyped/:id/:verify', (req, res) => {
 					UsersCoin: 0
 				};
 			}
-			let muteAmt = Math.floor(Math.random() * 11) + 1;
+			let muteAmt = Math.floor(Math.random() * 5) + 1;
 			if (muteAmt == 1) {
 				UsersCoin[id] = {
 					UsersCoin: UsersCoin[id].UsersCoin + 1
@@ -99,40 +99,10 @@ mu.get('/action/UserTyped/:id/:verify', (req, res) => {
 				UsersCoin[id] = {
 					UsersCoin: UsersCoin[id].UsersCoin + 16
 				};
-			} else
-			if (muteAmt == 6) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 32
-				};
-			} else		
-			if (muteAmt == 7) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 64
-				};
-			} else
-			if (muteAmt == 8) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 128
-				};
-			} else
-			if (muteAmt == 9) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 256
-				};
-			} else
-			if (muteAmt == 10) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 512
-				};
-			} else
-			if (muteAmt == 11) {
-				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 1024
-				};
 			}
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
             res.status(200).json({status: "OK"});
-            console.log(chalk.gray("Get | /action/UserTyped | " + id + " | 인증됨"));
+            console.log(chalk.gray("Get | /action/UserTyped | " + id + " | " + muteAmt + " | 인증됨"));
 		}
     }
 });
@@ -256,7 +226,7 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
         }
             res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
-            console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨"));
+            console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨\n" + `${Slot1}(${Ran1}) / ${Slot2}(${Ran2}) / ${Slot3}(${Ran3})`));
 		}
     }
 );
