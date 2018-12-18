@@ -219,11 +219,20 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             };
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
         } else {
-            SlotResult = "히익, 운이 없네뮤... [-10MUC(도박비용)]";
-            UsersCoin[id] = {
-                UsersCoin: UsersCoin[id].UsersCoin - 10
-            };
-            cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            let Ran4 = Math.floor(Math.random() * (3)) + 0;
+            if (Ran4 == 3) {
+                SlotResult = "쾅쾅, 경찰이다뮤! **잡았다 요놈** [-4444 MUC(벌금)]";
+                UsersCoin[id] = {
+                    UsersCoin: UsersCoin[id].UsersCoin - 4444
+                };
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            } else {
+                SlotResult = "히익, 운이 없네뮤... 국세청에서 세금을 들고갔다뮤.. [-100 MUC(세금)]";
+                UsersCoin[id] = {
+                    UsersCoin: UsersCoin[id].UsersCoin - 100
+                };
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            }
         }
             res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
             console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨\n" + `${Slot1}(${Ran1}) / ${Slot2}(${Ran2}) / ${Slot3}(${Ran3})`));
