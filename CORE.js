@@ -292,7 +292,7 @@ mu.get('/action/coinflip/:id/:verify', (req, res) => {
                 coinMent2 = `결과는... 에엣? 섯다뮤~! [+0 MUC, -0 MUC]`;
             }
             res.status(200).json({"status": "OK", "coinMent1": coinMent1, "coinMent2": coinMent2});
-            console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨\n" + `${Slot1}(${Ran1}) / ${Slot2}(${Ran2}) / ${Slot3}(${Ran3})`));
+            console.log(chalk.magenta("Get | /action/coinFlip | " + id + " | 인증됨\n" + `${coinAmtMent}(${coinAmt})`));
         }
     }
 );
