@@ -15,9 +15,6 @@ const chalk = require('chalk');
 const cmds = require("fs");
 const mu = server();
 
-mu.use(bodyParser.json());
-mu.use(bodyParser.urlencoded({ extended: true }));
-
 
 let DBport = 80;
 
@@ -97,7 +94,7 @@ mu.get('/action/UserTyped/:id/:verify', (req, res) => {
 			} else
 			if (muteAmt == 5) {
 				UsersCoin[id] = {
-					UsersCoin: UsersCoin[id].UsersCoin + 16
+					UsersCoin: UsersCoin[id].UsersCoin - 16
 				};
 			}
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
@@ -219,8 +216,8 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             };
             cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
         } else {
-            let Ran4 = Math.floor(Math.random() * (3)) + 0;
-            if (Ran4 == 3) {
+            let Ran4 = Math.floor(Math.random() * (2)) + 0;
+            if (Ran4 == 2) {
                 SlotResult = "쾅쾅, 경찰이다뮤! **잡았다 요놈** [-4444 MUC(벌금)]";
                 UsersCoin[id] = {
                     UsersCoin: UsersCoin[id].UsersCoin - 4444
@@ -237,6 +234,66 @@ mu.get('/action/Dobak/:id/:verify', (req, res) => {
             res.status(200).json({"status": "OK", "Slot1": Slot1, "Slot2": Slot2, "Slot3": Slot3 , "SlotResult": SlotResult});
             console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨\n" + `${Slot1}(${Ran1}) / ${Slot2}(${Ran2}) / ${Slot3}(${Ran3})`));
 		}
+    }
+);
+
+mu.get('/action/coinflip/:id/:verify', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    if (!req.params.verify) return res.status(401).json({error: 'unauthorized'});
+    if (req.params.verify != process.env.verify) return res.status(403).json({error: 'forbidden'});
+    if (!id) {
+      return res.status(400).json({error: 'Incorrect id'});
+    } else {
+        
+			if (!UsersCoin[id]) {
+				UsersCoin[id] = {
+					UsersCoin: 0
+				};
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { console.log(error); } });
+            }
+
+            let coinAmt = Math.floor(Math.random() * (3)) + 0; // 코인 종류
+            let coinResult = Math.floor(Math.random() * (3)) + 0; // 동전던지기 결과
+            let coinMent1; // 코인 결과의 따른 멘트
+            let coinMent2; // ..
+            let coinAmtMent; // 코인 종류의 따른 멘트
+            
+            if (coinAmt === 0) {
+                coinAmtMent = 1;
+            } else if (coinAmt === 1) {
+                coinAmtMent = 10;
+            } else if (coinAmt === 2) {
+                coinAmtMent = 100;
+            } else if (coinAmt = 3) {
+                coinAmtMent = 1000;
+            }
+
+            coinMent1 = `주머니에서 ${coinAmtMent} MUC 동전을 꺼내 돌렸다뮤!`;
+
+            if (coinResult === 0) {
+                coinMent2 =`결과는.... 앞이였다뮤! [+${coinAmtMent * 2} MUC]`;
+                UsersCoin[id] = {
+                    UsersCoin: UsersCoin[id].UsersCoin + (coinAmtMent * 2)
+                };
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            } else if (coinResult === 1) {
+                coinMent2 = `결과는... 뒷면이였다뮤... [-${coinAmtMent / 2} MUC]`;
+                UsersCoin[id] = {
+                    UsersCoin: UsersCoin[id].UsersCoin - (coinAmtMent / 2)
+                };
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            } else if (coinResult === 2) {
+                coinMent2 = `결과는... 어어엇! 하수구에 빠트렸다뮤.... [-${coinAmtMent} MUC]`;
+                UsersCoin[id] = {
+                    UsersCoin: UsersCoin[id].UsersCoin - coinAmtMent
+                };
+                cmds.writeFile("./Saved/UsersCoin.json", JSON.stringify(UsersCoin), (error) => { if (error) { } });
+            } else if (coinResult === 3) {
+                coinMent2 = `결과는... 에엣? 섯다뮤~! [+0 MUC, -0 MUC]`;
+            }
+            res.status(200).json({"status": "OK", "coinMent1": coinMent1, "coinMent2": coinMent2});
+            console.log(chalk.magenta("Get | /action/Dobak | " + id + " | 인증됨\n" + `${Slot1}(${Ran1}) / ${Slot2}(${Ran2}) / ${Slot3}(${Ran3})`));
+        }
     }
 );
 
